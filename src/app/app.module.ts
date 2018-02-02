@@ -7,6 +7,8 @@ import { GridComponent } from './components/grid/grid.component';
 import { TileComponent } from './components/tile/tile.component';
 import { CheckerComponent } from './components/checker/checker.component';
 import { AppService } from './app.service';
+import { WhiteCheckerComponent } from './components/white-checker/white-checker.component';
+import { BlackCheckerComponent } from './components/black-checker/black-checker.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { AppService } from './app.service';
     AppComponent,
     GridComponent,
     TileComponent,
-    CheckerComponent
+    CheckerComponent,
+    WhiteCheckerComponent,
+    BlackCheckerComponent
   ],
   imports: [
     BrowserModule

@@ -1,6 +1,6 @@
 <div class="grid-container">
   <div class="grid">
-    <div *ngFor="let row of this.as.grid" class="grid-column">
+    <div *ngFor="let row of this.as.board.grid" class="grid-column">
       <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)">
         <app-tile class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
       </div>
