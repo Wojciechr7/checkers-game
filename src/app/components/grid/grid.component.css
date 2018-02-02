@@ -14,7 +14,8 @@
     width: 100px;
     height: 100px;
 }
-app-tile {
+app-tile.tile {
+    display: block;
     width: 100px;
     height: 100px;
 

@@ -11,7 +11,8 @@ export class TileComponent implements OnInit {
     @Input() tileIndex: Index;
     @Input() square: number;
 
-  constructor(public as: AppService) { }
+  constructor(public as: AppService) {
+  }
 
 
   ngOnInit() {

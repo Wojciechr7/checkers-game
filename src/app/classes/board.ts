@@ -1,20 +1,22 @@
 import {Tile} from './tile';
 import {Pawn} from './pawns/pawn';
-import {BlackPawn} from './pawns/black-pawn';
-import {WhitePawn} from './pawns/white-pawn';
+import {Index} from '../interfaces';
 
 export class Board {
     private width: number;
     private height: number;
-    public grid: Tile[][];
-    public pawnList: Array<Pawn>;
+    public greenFields: Index;
+
+    // todo greenfields
 
     constructor(w: number, h: number) {
         this.width = w;
         this.height = h;
-        this.grid = this.createTiles();
-        this.pawnList = this.createData();
-        console.log(this.pawnList);
+
+        this.greenFields = {
+            x: 3,
+            y: 3
+        };
     }
 
     public createTiles(): Tile[][] {
@@ -30,21 +32,17 @@ export class Board {
         return array;
     }
 
-    public createData(): Array<Pawn> {
-        return [
-            new BlackPawn(3, 5, true),
-            new BlackPawn(4, 5, true),
-            new WhitePawn(7, 2, true),
-            new WhitePawn(7, 3, true)
-        ];
-    }
 
-    public display(tileIndex, color: string) {
-        for (let item of this.pawnList) {
-            if (item.canDisplay(tileIndex, color)) {
-                return true;
+
+    public checkField(tileIndex: Index, pawnList: Array<Pawn>): string {
+        for (const item of pawnList) {
+            if (item.comparer(tileIndex)) {
+                return item.getColor();
             }
         }
-        return false;
+        if (tileIndex.x === this.greenFields.x && tileIndex.y === this.greenFields.y) {
+            return 'green';
+        }
+        return 'empty';
     }
 }

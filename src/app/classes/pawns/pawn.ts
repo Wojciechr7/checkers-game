@@ -1,3 +1,5 @@
+import {Index} from '../../interfaces';
+
 export abstract class Pawn {
     protected x: number;
     protected y: number;
@@ -10,8 +12,15 @@ export abstract class Pawn {
         this.display = disp;
     }
 
-    public canDisplay(tileIndex, color: string): boolean {
-        return (this.x === tileIndex.x && this.y === tileIndex.y && this.display && this.color === color);
+    public comparer(tileIndex: Index, color?: string): boolean {
+        if (color)
+            return (this.x === tileIndex.x && this.y === tileIndex.y && this.display && this.color === color);
+        else return (this.x === tileIndex.x && this.y === tileIndex.y && this.display);
+
+    }
+
+    public getColor() {
+        return this.color;
     }
 
 
