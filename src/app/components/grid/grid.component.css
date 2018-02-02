@@ -1,0 +1,21 @@
+.grid {
+    width: 800px;
+    height: 800px;
+    background-color: #e3e3e3;
+    display: flex;
+    margin: auto auto;
+    border: 5px solid black;
+}
+.grid .grid-column {
+    width: 100px;
+    padding: 0;
+}
+.grid .grid-column .grid-item {
+    width: 100px;
+    height: 100px;
+}
+app-tile {
+    width: 100px;
+    height: 100px;
+
+}

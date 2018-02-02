@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { GridComponent } from './grid/grid.component';
-import { TileComponent } from './tile/tile.component';
-import { CheckerComponent } from './checker/checker.component';
+import { GridComponent } from './components/grid/grid.component';
+import { TileComponent } from './components/tile/tile.component';
+import { CheckerComponent } from './components/checker/checker.component';
+import { AppService } from './app.service';
 
 
 @NgModule({
@@ -18,7 +19,7 @@ import { CheckerComponent } from './checker/checker.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
