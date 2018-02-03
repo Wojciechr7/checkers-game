@@ -1,9 +1,12 @@
-<div class="grid-container">
-  <div class="grid">
+<div (mouseup)="this.as.releaseEvent()" class="grid-container">
+  <div (mouseup)="$event.stopPropagation()" class="grid">
     <div *ngFor="let row of this.as.grid" class="grid-column">
       <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)">
-        <app-tile (click)="this.as.tileClickEvent(tile.index, $event)" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
+        <app-tile (mousedown)="this.as.tileHoldEvent(tile.index, $event)" (mouseup)="this.as.dropPawn(tile.index)" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
       </div>
     </div>
   </div>
+</div>
+
+<div class="sticking-pawn">
 </div>

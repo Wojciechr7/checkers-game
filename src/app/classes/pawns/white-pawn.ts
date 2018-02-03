@@ -8,8 +8,12 @@ export class WhitePawn extends Pawn {
     }
 
     public move(): void {
-        console.log('moving down');
+        this.display = false;
     }
 
+    public changePosition(tileIndex): void {
+        this.x = tileIndex.x;
+        this.y = tileIndex.y;
+    }
 
 }

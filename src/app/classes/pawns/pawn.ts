@@ -23,7 +23,11 @@ export abstract class Pawn {
         return this.color;
     }
 
+    public enable() {
+        this.display = true;
+    }
+
 
     public abstract move(): void;
-
+    public abstract changePosition(tileIndex): void;
 }
