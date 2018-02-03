@@ -12,22 +12,22 @@ export class Sticking {
 
 
     public stickToMouse(color: string): void {
+        $('.sticking-pawn').css(
+            {
+                background: 'url("app/img/' + color + '_checker.png")',
+                backgroundSize: '100% 100%',
+                display: 'block',
+            });
         $(document).mousemove((e) => {
-            if (this.sticking) {
-                $('.sticking-pawn').css(
-                    {
-                        left: e.originalEvent.clientX + 10,
-                        top: e.originalEvent.clientY + 10,
-                        display: 'block',
-                        background: 'url("app/img/' + color + '_checker.png")',
-                        backgroundSize: '100% 100%'
-                    });
-            }
+            $('.sticking-pawn').css(
+                {
+                    left: e.originalEvent.clientX + 10,
+                    top: e.originalEvent.clientY + 10
+                });
         });
     }
 
     public release() {
-        this.sticking = false;
         $('.sticking-pawn').css('display', 'none');
     }
 }
