@@ -12,7 +12,7 @@ export abstract class Pawn {
         this.display = disp;
     }
 
-    public comparer(tileIndex: Index, color?: string): boolean {
+    public comparePawns(tileIndex: Index, color?: string): boolean {
         if (color)
             return (this.x === tileIndex.x && this.y === tileIndex.y && this.display && this.color === color);
         else return (this.x === tileIndex.x && this.y === tileIndex.y && this.display);
@@ -28,6 +28,8 @@ export abstract class Pawn {
     }
 
 
-    public abstract move(): void;
-    public abstract changePosition(tileIndex): void;
+
+
+    public abstract move(tileIndex: Index): void;
+    public abstract changePosition(tileIndex: Index): void;
 }

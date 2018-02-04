@@ -1,4 +1,5 @@
 import {Pawn} from './pawn';
+import {Index} from '../../interfaces';
 
 export class WhitePawn extends Pawn {
 
@@ -7,11 +8,11 @@ export class WhitePawn extends Pawn {
         this.color = 'white';
     }
 
-    public move(): void {
+    public move(tileIndex: Index): void {
         this.display = false;
     }
 
-    public changePosition(tileIndex): void {
+    public changePosition(tileIndex: Index): void {
         this.x = tileIndex.x;
         this.y = tileIndex.y;
     }

@@ -1,11 +1,13 @@
 import {Tile} from './tile';
 import {Pawn} from './pawns/pawn';
 import {Index} from '../interfaces';
+import {PossibleMove} from './moves/possible-move';
 
 export class Board {
     private width: number;
     private height: number;
     public greenFields: Index;
+
 
     // todo greenfields
 
@@ -17,6 +19,7 @@ export class Board {
             x: 3,
             y: 3
         };
+
     }
 
     public createTiles(): Tile[][] {
@@ -33,10 +36,9 @@ export class Board {
     }
 
 
-
     public checkField(tileIndex: Index, pawnList: Array<Pawn>): string {
         for (const item of pawnList) {
-            if (item.comparer(tileIndex)) {
+            if (item.comparePawns(tileIndex)) {
                 return item.getColor();
             }
         }

@@ -6,6 +6,10 @@ import {Pawn} from './classes/pawns/pawn';
 import {PawnsStatus} from './classes/pawns-status';
 import {Index} from './interfaces';
 import {Sticking} from './classes/sticking';
+import * as $ from 'jquery';
+import {Move} from './classes/moves/move';
+import {PossibleMove} from './classes/moves/possible-move';
+import {PossibleAttack} from './classes/moves/possible-attack';
 
 @Injectable()
 export class AppService {
@@ -15,11 +19,13 @@ export class AppService {
     public grid: Tile[][];
     private focusedPawn: Pawn;
     private sticker: Sticking;
+    private moves: Move;
 
     constructor() {
         this.board = new Board(GameSettings.H_TILES, GameSettings.V_TILES);
         this.grid = this.board.createTiles();
         this.pawnList = new PawnsStatus().createData();
+        this.moves = new PossibleMove();
     }
 
     public startGame(): void {
@@ -29,43 +35,35 @@ export class AppService {
 
     public display(tileIndex: Index, color: string) {
         for (let item of this.pawnList) {
-            if (item.comparer(tileIndex, color)) {
+            if (item.comparePawns(tileIndex, color)) {
                 return true;
             }
         }
         return false;
     }
 
-    public tileHoldEvent(tileIndex: Index, event) {
+    public pickUpPawn(tileIndex: Index, event) {
+        console.log(tileIndex);
         this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
 
-        switch (this.clickedFieldType) {
-            case 'black':
-                for (const item of this.pawnList) {
-                    if (item.comparer(tileIndex, 'black')) {
-                        this.focusedPawn = item;
-                        this.focusedPawn.move();
-                        this.sticker = new Sticking(true, 'black');
-                        this.sticker.stickToMouse('black');
-                    }
+        if (this.clickedFieldType === 'white' || this.clickedFieldType === 'black') {
+            for (const item of this.pawnList) {
+                if (item.comparePawns(tileIndex, this.clickedFieldType)) {
+                    this.moves = new PossibleAttack();
+                    if (this.clickedFieldType === 'black')
+                        this.moves.generatePossibleMoves(tileIndex, '-', this.pawnList);
+                    else this.moves.generatePossibleMoves(tileIndex, '+', this.pawnList);
+
+                    this.moves = new PossibleMove();
+                    if (this.clickedFieldType === 'black')
+                        this.moves.generatePossibleMoves(tileIndex, '-', this.pawnList);
+                    else this.moves.generatePossibleMoves(tileIndex, '+', this.pawnList);
+                    this.focusedPawn = item;
+                    this.focusedPawn.move(tileIndex);
+                    this.sticker = new Sticking(true, this.clickedFieldType);
+                    this.sticker.stickToMouse(this.clickedFieldType, this.focusedPawn);
                 }
-                break;
-            case 'white':
-                for (const item of this.pawnList) {
-                    if (item.comparer(tileIndex, 'white')) {
-                        this.focusedPawn = item;
-                        this.focusedPawn.move();
-                        this.sticker = new Sticking(true, 'white');
-                        this.sticker.stickToMouse('white');
-                    }
-                }
-                break;
-            case 'green':
-                console.log('greeen');
-                break;
-            default:
-                console.log('empty');
-                break;
+            }
         }
     }
 
@@ -74,6 +72,7 @@ export class AppService {
             this.sticker.release();
             this.focusedPawn.changePosition(tileIndex);
             this.focusedPawn.enable();
+            this.moves.possibleMoves = [];
         }
     }
 
@@ -81,8 +80,10 @@ export class AppService {
         if (this.focusedPawn) {
             this.sticker.release();
             this.focusedPawn.enable();
+            this.moves.possibleMoves = [];
         }
     }
+
 
 
 }

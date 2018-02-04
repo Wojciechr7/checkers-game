@@ -31,3 +31,6 @@ app-tile.tile {
     position: fixed;
     display: none;
 }
+.possible-move {
+    background-color: green !important;
+}
