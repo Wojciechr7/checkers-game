@@ -32,7 +32,6 @@ export abstract class Pawn {
     }
 
     public removePawn(pawnToRemove: Index, pawnlist: Array<Pawn>) {
-        console.log(pawnToRemove);
         for (const item of pawnlist) {
             if (item.comparePawns(pawnToRemove)) {
                 item.disable();

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppService} from '../../app.service';
 
 @Component({
   selector: 'app-score',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScoreComponent implements OnInit {
 
-  constructor() { }
+  constructor(public as: AppService) { }
 
   ngOnInit() {
   }

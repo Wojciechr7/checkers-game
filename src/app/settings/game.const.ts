@@ -6,3 +6,7 @@ export const GameSettings = {
     MIN_POSITION: 0
 };
 
+export const PlayerSettings = {
+    INIT_PAWNS: 12,
+    INIT_LOST_PAWNS: 0
+};

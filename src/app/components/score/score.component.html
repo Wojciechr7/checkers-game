@@ -1,3 +1,22 @@
-<p>
-  score works!
-</p>
+<table class="table table-bordered table-sm">
+    <thead class="table-dark text-center">
+        <tr>
+            <td>Player</td>
+            <td>score</td>
+            <td>pawns</td>
+            <td>lost pawns</td>
+        </tr>
+    </thead>
+    <tr [ngClass]="{'table-success' : this.as.game.actualPlayer === 0}">
+        <td>{{this.as.game.players[0].getColor()}}</td>
+        <td>{{this.as.game.players[0].calculateScore()}}</td>
+        <td>{{this.as.game.players[0].getNumberOfPawns()}}</td>
+        <td>{{this.as.game.players[0].getNumberOfLostPawns()}}</td>
+    </tr>
+    <tr [ngClass]="{'table-success' : this.as.game.actualPlayer === 1}">
+        <td>{{this.as.game.players[1].getColor()}}</td>
+        <td>{{this.as.game.players[1].calculateScore()}}</td>
+        <td>{{this.as.game.players[1].getNumberOfPawns()}}</td>
+        <td>{{this.as.game.players[1].getNumberOfLostPawns()}}</td>
+    </tr>
+</table>

@@ -7,7 +7,8 @@ export class WhitePlayer extends Player {
         super(ownedCheckers, lostCheckers);
     }
 
-    public calculateScore(): void {
 
+    public getColor(): string {
+        return 'white';
     }
 }
