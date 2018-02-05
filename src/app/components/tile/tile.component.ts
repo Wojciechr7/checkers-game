@@ -14,6 +14,15 @@ export class TileComponent implements OnInit {
   constructor(public as: AppService) {
   }
 
+    public display(tileIndex: Index, color: string) {
+        for (let item of this.as.pawnList) {
+            if (item.comparePawns(tileIndex, color)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
   ngOnInit() {
   }

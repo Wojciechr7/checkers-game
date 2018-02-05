@@ -1,5 +1,6 @@
 import {Pawn} from './pawn';
 import {Index} from '../../interfaces';
+import {Move} from '../moves/move';
 
 export class WhitePawn extends Pawn {
 
@@ -12,9 +13,36 @@ export class WhitePawn extends Pawn {
         this.display = false;
     }
 
-    public changePosition(tileIndex: Index): void {
-        this.x = tileIndex.x;
-        this.y = tileIndex.y;
+    public changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): void {
+        let moveIsPossible: boolean = false;
+        for (const move of possibleMoves) {
+            if (move.x === tileIndex.x && move.y === tileIndex.y) {
+                moveIsPossible = true;
+            }
+        }
+
+        let pawnToRemove: Index;
+        if (moveIsPossible) {
+            if (Math.abs(this.y - tileIndex.y) === 1) {
+                this.x = tileIndex.x;
+                this.y = tileIndex.y;
+            } else if (Math.abs(this.y - tileIndex.y) === 2) {
+                if (this.x - tileIndex.x > 0) {
+                    pawnToRemove = {
+                        x: this.x - 1,
+                        y: this.y + 1
+                    };
+                } else {
+                    pawnToRemove = {
+                        x: this.x + 1,
+                        y: this.y + 1
+                    };
+                }
+                this.removePawn(pawnToRemove, pawnlist);
+                this.x = tileIndex.x;
+                this.y = tileIndex.y;
+            }
+        }
     }
 
 }

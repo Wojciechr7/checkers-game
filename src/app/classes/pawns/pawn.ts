@@ -1,4 +1,5 @@
 import {Index} from '../../interfaces';
+import {Move} from '../moves/move';
 
 export abstract class Pawn {
     protected x: number;
@@ -24,12 +25,24 @@ export abstract class Pawn {
     }
 
     public enable() {
+        console.log(this.x, this.y, 'enablowanko');
         this.display = true;
+    }
+    public disable() {
+        this.display = false;
+    }
+
+    public removePawn(pawnToRemove: Index, pawnlist: Array<Pawn>) {
+        console.log(pawnToRemove);
+        for (const item of pawnlist) {
+            if (item.comparePawns(pawnToRemove)) {
+                item.disable();
+            }
+        }
     }
 
 
 
-
     public abstract move(tileIndex: Index): void;
-    public abstract changePosition(tileIndex: Index): void;
+    public abstract changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): void;
 }

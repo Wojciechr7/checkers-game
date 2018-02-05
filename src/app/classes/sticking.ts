@@ -1,5 +1,6 @@
 import * as $ from 'jquery';
 import {Pawn} from './pawns/pawn';
+import {Move} from './moves/move';
 
 export class Sticking {
     private sticking: boolean;
@@ -12,7 +13,7 @@ export class Sticking {
     }
 
 
-    public stickToMouse(color: string, focusedPawn: Pawn): void {
+    public stickToMouse(color: string, focusedPawn: Pawn, moves: Move): void {
         $('.sticking-pawn').css(
             {
                 background: 'url("app/img/' + color + '_checker.png")',
@@ -22,9 +23,8 @@ export class Sticking {
             });
         $(document).mousemove((e) => {
             if (e.target.clientHeight > 100) {
-                /*focusedPawn.enable();
-                this.release();*/
-                $('.grid-container').trigger('click');
+                moves.possibleMoves = [];
+                this.release();
             }
             $('.sticking-pawn').css(
                 {
