@@ -25,7 +25,6 @@ export abstract class Pawn {
     }
 
     public enable() {
-        console.log(this.x, this.y, 'enablowanko');
         this.display = true;
     }
     public disable() {
@@ -38,6 +37,30 @@ export abstract class Pawn {
             if (item.comparePawns(pawnToRemove)) {
                 item.disable();
             }
+        }
+    }
+    protected setPawnToRemove(tileIndex: Index): Index {
+        if (this.x - tileIndex.x > 0 && this.y - tileIndex.y > 0) {
+            return {
+                x: this.x - 1,
+                y: this.y - 1
+            };
+        } else if (this.y - tileIndex.y > 0) {
+            return {
+                x: this.x + 1,
+                y: this.y - 1
+            };
+        }
+        if (this.x - tileIndex.x > 0 && this.y - tileIndex.y <= 0) {
+            return {
+                x: this.x - 1,
+                y: this.y + 1
+            };
+        } else if (this.y - tileIndex.y <= 0) {
+            return {
+                x: this.x + 1,
+                y: this.y + 1
+            };
         }
     }
 

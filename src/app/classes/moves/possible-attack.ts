@@ -12,17 +12,28 @@ export class PossibleAttack extends Move {
     }
 
     public generatePossibleMoves(tileIndex: Index, color: string, pawnList: Array<Pawn>): void {
-        let left: Index, right: Index, sign: number;
-        sign = color === 'black' ? -1 : 1;
-        left = {
-            x: tileIndex.x - 1,
-            y: tileIndex.y + sign
-        };
-        right = {
-            x: tileIndex.x + 1,
-            y: tileIndex.y + sign
-        };
-        this.possibleAttacks = this.FieldFilled(left, right, pawnList, color, sign);
+        let possibleChecks: Array<Index>, sign: number;
+
+        possibleChecks = [
+            {
+                x: tileIndex.x - 1,
+                y: tileIndex.y - 1
+            },
+            {
+                x: tileIndex.x + 1,
+                y: tileIndex.y - 1
+            },
+            {
+                x: tileIndex.x - 1,
+                y: tileIndex.y + 1
+            },
+            {
+                x: tileIndex.x + 1,
+                y: tileIndex.y + 1
+            }
+        ];
+
+        this.possibleAttacks = this.FieldFilled(possibleChecks, pawnList, color);
         this.possibleMoves = this.findEmptyFields(this.possibleAttacks, pawnList);
 
     }
@@ -48,31 +59,31 @@ export class PossibleAttack extends Move {
     }
 
 
-    private FieldFilled(first: Index, second: Index, pawnList: Array<Pawn>, color: string, sign: number): Array<Index> {
+    private FieldFilled(possibleChecks: Array<Index>, pawnList: Array<Pawn>, color: string): Array<Index> {
         this.isAttackPossible = false;
         const itemsToAdd: Array<Index> = [];
 
-        for (const item of pawnList) {
-            if (item.comparePawns(first)) {
-                if (item.getColor() !== color) {
-                    first.x -= 1;
-                    first.y += sign;
-                    itemsToAdd.push(first);
+        let sign: number = -1;
+        let sign2: number = -1;
+
+        for (const i in possibleChecks) {
+            for (const item of pawnList) {
+                if (item.comparePawns(possibleChecks[i])) {
+                    if (item.getColor() !== color) {
+                        possibleChecks[i].x += sign;
+                        possibleChecks[i].y += sign2;
+                        itemsToAdd.push(possibleChecks[i]);
+                    }
+                    break;
                 }
-                break;
+            }
+            sign *= -1;
+            if (parseInt(i) === 1) {
+                sign2 = 1;
             }
         }
 
-        for (const item of pawnList) {
-            if (item.comparePawns(second)) {
-                if (item.getColor() !== color) {
-                    second.x += 1;
-                    second.y += sign;
-                    itemsToAdd.push(second);
-                }
-                break;
-            }
-        }
+
         if (itemsToAdd.length > 0) {
             this.isAttackPossible = true;
         }

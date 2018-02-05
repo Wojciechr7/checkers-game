@@ -36,6 +36,7 @@ export class AppService {
 
     public pickUpPawn(tileIndex: Index, event) {
         console.log(tileIndex);
+
         this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
 
         if (this.clickedFieldType === 'white' || this.clickedFieldType === 'black') {

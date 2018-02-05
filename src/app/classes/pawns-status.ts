@@ -10,6 +10,7 @@ export class PawnsStatus {
             new BlackPawn(2, 5, true),
             new BlackPawn(4, 5, true),
             new WhitePawn(7, 2, true),
+            new WhitePawn(3, 4, true),
             new WhitePawn(7, 4, true)
         ];
     }

@@ -31,17 +31,9 @@ export class BlackPawn extends Pawn {
                 this.x = tileIndex.x;
                 this.y = tileIndex.y;
             } else if (Math.abs(this.y - tileIndex.y) === 2) {
-                if (this.x - tileIndex.x > 0) {
-                    pawnToRemove = {
-                        x: this.x - 1,
-                        y: this.y - 1
-                    };
-                } else {
-                    pawnToRemove = {
-                        x: this.x + 1,
-                        y: this.y - 1
-                    };
-                }
+
+                pawnToRemove = this.setPawnToRemove(tileIndex);
+
                 this.removePawn(pawnToRemove, pawnlist);
                 this.x = tileIndex.x;
                 this.y = tileIndex.y;
