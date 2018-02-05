@@ -9,6 +9,7 @@ import { CheckerComponent } from './components/checker/checker.component';
 import { AppService } from './app.service';
 import { WhiteCheckerComponent } from './components/white-checker/white-checker.component';
 import { BlackCheckerComponent } from './components/black-checker/black-checker.component';
+import { ScoreComponent } from './components/score/score.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { BlackCheckerComponent } from './components/black-checker/black-checker.
     TileComponent,
     CheckerComponent,
     WhiteCheckerComponent,
-    BlackCheckerComponent
+    BlackCheckerComponent,
+    ScoreComponent
   ],
   imports: [
     BrowserModule
