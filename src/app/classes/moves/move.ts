@@ -26,4 +26,35 @@ export abstract class Move {
         return false;
     }
 
+    public compareToMoves(tileIndex: Index): boolean {
+        for (const move of this.possibleMoves) {
+            if (JSON.stringify(move) === JSON.stringify(tileIndex)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public scanForPossibleAttacks(pawnList: Array<Pawn>, field: string): boolean {
+        for (const pawn of pawnList) {
+            if (pawn.getColor() === field) {
+                if (pawn.canAttack(pawnList)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public canMakeNextMove(pawnList: Array<Pawn>, tileIndex: Index): boolean {
+        for (const pawn of pawnList) {
+            if (pawn.comparePawns(tileIndex)) {
+                if (pawn.canAttack(pawnList)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

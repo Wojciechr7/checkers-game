@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {AppService} from '../../app.service';
+import {Index} from '../../interfaces';
 
 @Component({
   selector: 'app-black-checker',
@@ -6,8 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./black-checker.component.css']
 })
 export class BlackCheckerComponent implements OnInit {
+    @Input() tileIndex: Index;
+    styles: Object;
 
-  constructor() { }
+  constructor(public as: AppService) { }
+
+    protected setBackground(tileIndex) {
+        for (const pawn of this.as.pawnList) {
+            if (pawn.comparePawns(tileIndex)) {
+                if (pawn.Queen) {
+                    return Object.assign({}, this.styles, {
+                        backgroundImage: 'url("app/img/black_checker_supernova.png")'
+                    });
+                }
+            }
+        }
+        return Object.assign({}, this.styles, {
+            backgroundImage: 'url("app/img/black_checker.png")'
+        });
+    }
 
   ngOnInit() {
   }

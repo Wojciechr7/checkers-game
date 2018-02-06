@@ -1,24 +1,14 @@
 import {Tile} from './tile';
 import {Pawn} from './pawns/pawn';
 import {Index} from '../interfaces';
-import {PossibleMove} from './moves/possible-move';
 
 export class Board {
     private width: number;
     private height: number;
-    public greenFields: Index;
-
-
-    // todo greenfields
 
     constructor(w: number, h: number) {
         this.width = w;
         this.height = h;
-
-        this.greenFields = {
-            x: 3,
-            y: 3
-        };
 
     }
 
@@ -41,9 +31,6 @@ export class Board {
             if (item.comparePawns(tileIndex)) {
                 return item.getColor();
             }
-        }
-        if (tileIndex.x === this.greenFields.x && tileIndex.y === this.greenFields.y) {
-            return 'green';
         }
         return 'empty';
     }

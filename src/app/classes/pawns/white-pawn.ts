@@ -1,6 +1,7 @@
 import {Pawn} from './pawn';
 import {Index} from '../../interfaces';
 import {Move} from '../moves/move';
+import {GameSettings} from '../../settings/game.const';
 
 export class WhitePawn extends Pawn {
 
@@ -11,6 +12,16 @@ export class WhitePawn extends Pawn {
 
     public move(tileIndex: Index): void {
         this.display = false;
+    }
+
+    public canAttack(pawnList: Array<Pawn>): boolean {
+        let stickedPawns: Array<Index>;
+        let emptyFields: Array<Index>;
+
+        stickedPawns = this.getStickedPawns(pawnList);
+        emptyFields = this.findEmptyFields(stickedPawns, pawnList);
+
+        return emptyFields.length > 0;
     }
 
     public changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): void {
@@ -33,6 +44,9 @@ export class WhitePawn extends Pawn {
                 this.removePawn(pawnToRemove, pawnlist);
                 this.x = tileIndex.x;
                 this.y = tileIndex.y;
+            }
+            if (this.y === GameSettings.MAX_POSITION) {
+                this.makeQueen();
             }
         }
     }

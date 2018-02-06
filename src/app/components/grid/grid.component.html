@@ -3,7 +3,7 @@
   <div (mouseup)="$event.stopPropagation()" class="grid">
     <div *ngFor="let row of this.as.grid" class="grid-column">
       <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)" [ngClass]="{'possible-move' : this.as.moves.isMovePossible(tile.index)}">
-        <app-tile (mousedown)="this.as.pickUpPawn(tile.index, $event)" (mouseup)="this.as.dropPawn(tile.index)" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
+        <app-tile (mousedown)="this.as.pickUpPawn(tile.index)" (mouseup)="this.as.dropPawn(tile.index)" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
       </div>
     </div>
   </div>

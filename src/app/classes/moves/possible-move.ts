@@ -11,40 +11,61 @@ export class PossibleMove extends Move {
 
     public generatePossibleMoves(tileIndex: Index, color: string, pawnList: Array<Pawn>): void {
         this.possibleMoves = [];
-        let left: Index, right: Index, sign: number;
-        sign = color === 'black' ? -1 : 1;
-        left = {
-            x: tileIndex.x - 1,
-            y: tileIndex.y + sign
-        };
-        right = {
-            x: tileIndex.x + 1,
-            y: tileIndex.y + sign
-        };
-        this.possibleMoves = this.FieldEmpty(left, right, pawnList);
+        let possibleChecks: Array<Index>;
+        possibleChecks = [
+            {
+                x: tileIndex.x - 1,
+                y: tileIndex.y - 1
+            },
+            {
+                x: tileIndex.x + 1,
+                y: tileIndex.y - 1
+            },
+            {
+                x: tileIndex.x - 1,
+                y: tileIndex.y + 1
+            },
+            {
+                x: tileIndex.x + 1,
+                y: tileIndex.y + 1
+            }
+        ];
+        this.possibleMoves = this.FieldEmpty(possibleChecks, pawnList, color, tileIndex);
     }
 
-    private FieldEmpty(first: Index, second: Index, pawnList: Array<Pawn>): Array<Index> {
+    private FieldEmpty(possibleChecks: Array<Index>, pawnList: Array<Pawn>, color: string, tileIndex: Index): Array<Index> {
         const itemsToAdd: Array<Index> = [];
-        let foundItem: boolean = false;
-        for (const item of pawnList) {
-            if (item.comparePawns(first)) {
-                foundItem = true;
+        let a: number, b: number;
+        if (color === 'black') {
+            a = 0;
+            b = 1;
+        } else if (color === 'white') {
+            a = 2;
+            b = 3;
+        }
+        for (const pawn of pawnList) {
+            if (pawn.comparePawns(tileIndex)) {
+                if (pawn.Queen) {
+                    a = 0;
+                    b = 3;
+                }
             }
         }
-        if (!foundItem) {
-            itemsToAdd.push(first);
-        }
-        foundItem = false;
 
-        for (const item of pawnList) {
-            if (item.comparePawns(second)) {
-                foundItem = true;
+        while (a <= b) {
+            let foundItem: boolean = false;
+            for (const item of pawnList) {
+                if (item.comparePawns(possibleChecks[a])) {
+                    foundItem = true;
+                }
             }
+            if (!foundItem) {
+                itemsToAdd.push(possibleChecks[a]);
+            }
+            foundItem = false;
+            a++;
         }
-        if (!foundItem) {
-            itemsToAdd.push(second);
-        }
+
         return itemsToAdd;
     }
 }

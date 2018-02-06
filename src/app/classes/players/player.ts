@@ -1,8 +1,11 @@
+import {Pawn} from '../pawns/pawn';
+
 export abstract class Player {
 
     protected score: number;
     protected ownedCheckers: number;
     protected lostCheckers: number;
+    protected active: boolean;
 
 
     constructor(owned: number, lost: number) {
@@ -11,9 +14,10 @@ export abstract class Player {
     }
 
     public abstract getColor(): string;
+    public abstract update(pawnList: Array<Pawn>): void;
 
     public calculateScore(): number {
-        return (this.ownedCheckers - this.lostCheckers) * 100;
+        return (this.ownedCheckers * 100 - this.lostCheckers * 10);
     }
 
     public getNumberOfPawns(): number {
@@ -22,6 +26,14 @@ export abstract class Player {
 
     public getNumberOfLostPawns(): number {
         return this.lostCheckers;
+    }
+
+    public playerActive(): boolean {
+        return this.active;
+    }
+
+    public switchState(): void {
+        this.active = !this.active;
     }
 
 

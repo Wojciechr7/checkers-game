@@ -1,7 +1,6 @@
 .white-checker {
     width: 100%;
     height: 100%;
-    background-image: url("../../img/white_checker.png");
     background-size: 100% 100%;
     cursor: pointer;
     transition: all .3s;
