@@ -1,6 +1,5 @@
 import {Index} from '../../interfaces';
 import {Pawn} from '../pawns/pawn';
-import {IndexColor} from '../../interfaces/index-color';
 
 export abstract class Move {
 

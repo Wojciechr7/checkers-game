@@ -13,6 +13,14 @@ export abstract class Player {
         this.lostCheckers = lost;
     }
 
+    get Active(): boolean {
+        return this.active;
+    }
+
+    set Active(state: boolean) {
+        this.active = state;
+    }
+
     public abstract getColor(): string;
     public abstract update(pawnList: Array<Pawn>): void;
 
@@ -32,9 +40,6 @@ export abstract class Player {
         return this.active;
     }
 
-    public switchState(): void {
-        this.active = !this.active;
-    }
 
 
 }

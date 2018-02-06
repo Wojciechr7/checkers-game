@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../environments/environment';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
 import { AppComponent } from './app.component';
@@ -10,6 +13,7 @@ import { AppService } from './app.service';
 import { WhiteCheckerComponent } from './components/white-checker/white-checker.component';
 import { BlackCheckerComponent } from './components/black-checker/black-checker.component';
 import { ScoreComponent } from './components/score/score.component';
+import {CollectionService} from './collection.service';
 
 
 @NgModule({
@@ -23,9 +27,11 @@ import { ScoreComponent } from './components/score/score.component';
     ScoreComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFirestoreModule
   ],
-  providers: [AppService],
+  providers: [AppService, CollectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

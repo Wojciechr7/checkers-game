@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Tile} from '../../classes/tile';
 import {AppService} from '../../app.service';
-import * as $ from 'jquery';
+import {CollectionService} from '../../collection.service';
 
 @Component({
   selector: 'app-grid',
@@ -11,7 +10,7 @@ import * as $ from 'jquery';
 export class GridComponent implements OnInit {
     styles: Object;
 
-  constructor(public as: AppService) { }
+  constructor(public as: AppService, public cs: CollectionService) { }
 
     protected setColor(index) {
         if ((index.y + index.x) % 2) {

@@ -14,7 +14,7 @@ export class WhiteCheckerComponent implements OnInit {
     constructor(public as: AppService) {
     }
 
-    protected setBackground(tileIndex) {
+    public setBackground(tileIndex) {
         for (const pawn of this.as.pawnList) {
             if (pawn.comparePawns(tileIndex)) {
                 if (pawn.Queen) {

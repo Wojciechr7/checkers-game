@@ -36,3 +36,6 @@ app-tile.tile {
 .possible-move {
     background-color: green !important;
 }
+.reset-btn {
+    float: left;
+}

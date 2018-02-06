@@ -26,5 +26,9 @@ export class WhitePlayer extends Player {
         this.ownedCheckers = counter;
         this.lostCheckers = PlayerSettings.INIT_PAWNS - counter;
         this.calculateScore();
+
+        if (this.lostCheckers === 12) {
+            alert('Black player won the game!');
+        }
     }
 }

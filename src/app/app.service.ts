@@ -15,7 +15,6 @@ import {Game} from './classes/game';
 export class AppService {
     public board: Board;
     public clickedFieldType: string;
-    public pawnList: Array<Pawn>;
     public grid: Tile[][];
     private focusedPawn: Pawn;
     private sticker: Sticking;
@@ -23,13 +22,18 @@ export class AppService {
     public game: Game;
     private pickedUp: boolean;
     private pickedUpIndex: Index;
+    public pawnList: Array<Pawn>;
+    public switchPlayers: boolean;
+
 
     constructor() {
         this.board = new Board(GameSettings.H_TILES, GameSettings.V_TILES);
         this.grid = this.board.createTiles();
-        this.pawnList = new PawnsStatus().createData();
         this.moves = new PossibleMove();
         this.pickedUp = false;
+        this.pawnList = new PawnsStatus().createData();
+        this.switchPlayers = false;
+
 
     }
 
@@ -38,7 +42,6 @@ export class AppService {
     }
 
     public pickUpPawn(tileIndex: Index) {
-        console.log(tileIndex);
         let pawnNumber: number;
         this.pickedUpIndex = tileIndex;
         this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
@@ -74,7 +77,6 @@ export class AppService {
                 this.focusedPawn.changePosition(tileIndex, this.pawnList, this.moves.possibleMoves);
                 this.focusedPawn.enable();
                 this.moves.possibleMoves = [];
-                this.game.updateStats(this.pawnList);
                 this.pickedUp = false;
                 if (this.game.didAttack(this.pickedUpIndex, tileIndex)) {
                     if (this.moves.canMakeNextMove(this.pawnList, tileIndex)) {
@@ -82,7 +84,8 @@ export class AppService {
                     }
                 }
                 if (switchPlayers) {
-                    this.game.switchPlayers();
+                    this.switchPlayers = true;
+                    this.game.changeActualPlayer(this.focusedPawn);
                 }
             }
             if (!this.moves.compareToMoves(tileIndex)) {
@@ -98,6 +101,12 @@ export class AppService {
             this.focusedPawn.enable();
             this.moves.possibleMoves = [];
         }
+    }
+
+    public resetGame(): void {
+        this.pawnList = new PawnsStatus().createData();
+        this.game.reset();
+
     }
 
 

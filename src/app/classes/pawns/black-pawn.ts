@@ -1,12 +1,11 @@
 import {Index} from '../../interfaces';
 import {Pawn} from './pawn';
-import {Move} from '../moves/move';
 import {GameSettings} from '../../settings/game.const';
 
 export class BlackPawn extends Pawn {
 
-    constructor(x: number, y: number, display: boolean) {
-        super(x, y, display);
+    constructor(x: number, y: number, display: boolean, id: number) {
+        super(x, y, display, id);
         this.color = 'black';
     }
 

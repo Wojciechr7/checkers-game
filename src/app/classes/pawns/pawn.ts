@@ -1,6 +1,6 @@
 import {Index} from '../../interfaces';
-import {Move} from '../moves/move';
 import {GameSettings} from '../../settings/game.const';
+import {CollectionData} from '../../interfaces/collection-data';
 
 export abstract class Pawn {
     protected x: number;
@@ -8,12 +8,14 @@ export abstract class Pawn {
     protected display: boolean;
     protected color: string;
     protected queen: boolean;
+    protected id: number;
 
-    constructor (xPos: number, yPos: number, disp: boolean) {
+    constructor (xPos: number, yPos: number, disp: boolean, identity: number) {
         this.x = xPos;
         this.y = yPos;
         this.display = disp;
         this.queen = false;
+        this.id = identity;
     }
 
     public comparePawns(tileIndex: Index, color?: string): boolean {
@@ -21,6 +23,29 @@ export abstract class Pawn {
             return (this.x === tileIndex.x && this.y === tileIndex.y && this.display && this.color === color);
         else return (this.x === tileIndex.x && this.y === tileIndex.y && this.display);
 
+    }
+
+    public setAllData(dbData) {
+        for (const item of dbData) {
+            if (item.id === this.id) {
+                this.x = item.x;
+                this.y = item.y;
+                this.display = item.display;
+                this.color = item.color;
+                this.queen = item.queen;
+            }
+        }
+    }
+
+    public getAllData(): CollectionData {
+        return {
+            x: this.x,
+            y: this.y,
+            color: this.color,
+            display: this.display,
+            queen: this.queen,
+            id: this.id
+        };
     }
 
     get Display(): boolean {

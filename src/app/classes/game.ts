@@ -19,12 +19,24 @@ export class Game {
         this.actualPlayer = 1;
     }
 
-    public switchPlayers(): void {
-        for (const player of this.players) {
-            player.switchState();
+    public changeActualPlayer(pawn): void {
+        if (pawn.getColor() === 'black') {
+            this.actualPlayer = 1;
+        } else {
+            this.actualPlayer = 0;
         }
-        this.actualPlayer = (this.actualPlayer === 1) ? 0 : 1;
     }
+
+    public switchStatus(): void {
+        let next: number;
+        next = (this.actualPlayer === 0) ? 1 : 0;
+        if (!this.players[this.actualPlayer].Active) {
+            this.players[this.actualPlayer].Active = true;
+            this.players[next].Active = false;
+        }
+    }
+
+
 
     public updateStats(pawnList: Array<Pawn>): void {
         for (const player of this.players) {
@@ -35,4 +47,14 @@ export class Game {
     public didAttack(before: Index, after: Index): boolean {
         return Math.abs(before.x - after.x) === 2;
     }
+
+    public reset() {
+        this.actualPlayer = 1;
+        this.players[0].Active = false;
+        this.players[1].Active = true;
+        this.players = [];
+        this.players.push(new BlackPlayer(PlayerSettings.INIT_PAWNS, PlayerSettings.INIT_LOST_PAWNS));
+        this.players.push(new WhitePlayer(PlayerSettings.INIT_PAWNS, PlayerSettings.INIT_LOST_PAWNS));
+    }
+
 }
