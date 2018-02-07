@@ -42,25 +42,27 @@ export class AppService {
     }
 
     public pickUpPawn(tileIndex: Index) {
-        let pawnNumber: number;
-        this.pickedUpIndex = tileIndex;
-        this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
-        pawnNumber = (this.clickedFieldType === 'white') ? 1 : 0;
-        if (pawnNumber === this.game.actualPlayer) {
-            for (const item of this.pawnList) {
-                if (item.comparePawns(tileIndex, this.clickedFieldType)) {
-                    this.moves = new PossibleAttack();
-                    this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
-                    if (!this.moves.isAttackPossible && this.moves.scanForPossibleAttacks(this.pawnList, this.clickedFieldType)) {
-                        this.moves = new PossibleMove();
+        if (!this.pickedUp) {
+            let pawnNumber: number;
+            this.pickedUpIndex = tileIndex;
+            this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
+            pawnNumber = (this.clickedFieldType === 'white') ? 1 : 0;
+            if (pawnNumber === this.game.actualPlayer) {
+                for (const item of this.pawnList) {
+                    if (item.comparePawns(tileIndex, this.clickedFieldType)) {
+                        this.moves = new PossibleAttack();
                         this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
-                    }
-                    this.focusedPawn = item;
-                    this.focusedPawn.disable();
-                    this.sticker = new Sticking(true, this.clickedFieldType);
-                    this.sticker.stickToMouse(this.clickedFieldType, this.focusedPawn, this.moves);
-                    this.pickedUp = true;
+                        if (!this.moves.isAttackPossible && this.moves.scanForPossibleAttacks(this.pawnList, this.clickedFieldType)) {
+                            this.moves = new PossibleMove();
+                            this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
+                        }
+                        this.focusedPawn = item;
+                        this.focusedPawn.disable();
+                        this.sticker = new Sticking(true, this.clickedFieldType);
+                        this.sticker.stickToMouse(this.clickedFieldType, this.focusedPawn, this.moves);
+                        this.pickedUp = true;
 
+                    }
                 }
             }
         }
@@ -100,6 +102,7 @@ export class AppService {
             this.sticker.release();
             this.focusedPawn.enable();
             this.moves.possibleMoves = [];
+            this.pickedUp = false;
         }
     }
 
