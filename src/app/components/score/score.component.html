@@ -1,25 +1,13 @@
 <table class="table table-bordered table-sm">
     <thead class="table-dark text-center">
         <tr>
-            <td>Player</td>
-            <td>score</td>
-            <td>pawns</td>
-            <td>lost pawns</td>
+            <td>PLAYER</td>
+            <td>SCORE</td>
+            <td>PAWNS</td>
+            <td>LOST PAWNS</td>
         </tr>
     </thead>
-<!--    <tr [ngClass]="{'table-success' : this.as.game.actualPlayer === 0}">
-        <td>{{this.as.game.players[0].getColor()}}</td>
-        <td>{{this.as.game.players[0].calculateScore()}}</td>
-        <td>{{this.as.game.players[0].getNumberOfPawns()}}</td>
-        <td>{{this.as.game.players[0].getNumberOfLostPawns()}}</td>
-    </tr>
-    <tr [ngClass]="{'table-success' : this.as.game.actualPlayer === 1}">
-        <td>{{this.as.game.players[1].getColor()}}</td>
-        <td>{{this.as.game.players[1].calculateScore()}}</td>
-        <td>{{this.as.game.players[1].getNumberOfPawns()}}</td>
-        <td>{{this.as.game.players[1].getNumberOfLostPawns()}}</td>
-    </tr>-->
-    <tr *ngFor="let player of this.as.game.players" [ngClass]="{'table-success' : player.playerActive()}">
+    <tr class="table table-inverse" *ngFor="let player of this.as.game.players" [ngClass]="{'table-success' : player.playerActive()}">
         <td>{{player.getColor()}}</td>
         <td>{{player.calculateScore()}}</td>
         <td>{{player.getNumberOfPawns()}}</td>

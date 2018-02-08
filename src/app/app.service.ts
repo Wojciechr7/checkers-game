@@ -64,6 +64,8 @@ export class AppService {
 
                     }
                 }
+            } else {
+                this.releaseEvent();
             }
         }
 

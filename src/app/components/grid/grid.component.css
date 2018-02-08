@@ -1,41 +1,94 @@
 .grid-container {
     width: 100%;
     height: 100%;
+    display: flex;
 }
 .grid {
-    width: 800px;
-    height: 800px;
+    width: 50vw;
+    height: 50vw;
     background-color: #e3e3e3;
     display: flex;
-    margin: auto auto;
-    border: 5px solid black;
+    margin-right: auto;
+    border: 2px solid white;
     padding: 0;
+
 
 }
 .grid .grid-column {
-    width: 100px;
+    width: 12.5%;
+    height: 100%;
     padding: 0;
 }
 .grid .grid-column .grid-item {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 12.5%;
 }
-app-tile.tile {
-    display: block;
-    width: 100px;
-    height: 100px;
+.grid .grid-column .grid-item.possible-move {
+    background-color: green !important;
+    position: relative;
+}
+
+.grid .grid-column .grid-item.possible-move:hover ::after {
+    content: "";
+    background: red;
+    height: 6%;
+    left: 45%;
+    position: absolute;
+    top: 47%;
+    width: 10%;
+    opacity: 0;
+    transform: rotate(45deg);
+    animation: pointer-animate .5s forwards;
 
 }
+
+.grid .grid-column .grid-item.possible-move:hover ::before {
+    background: red;
+    content: "";
+    height: 6%;
+    left: 45%;
+    position: absolute;
+    top: 47%;
+    width: 10%;
+    opacity: 0;
+    transform: rotate(-45deg);
+    animation: pointer-animate .5s forwards;
+
+}
+
+@keyframes pointer-animate {
+    100% {
+        width: 80%;
+        left: 10%;
+        opacity: .8;
+    }
+}
+
+
+.grid .grid-column .grid-item app-tile.tile {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+}
+.grid-container .left-panel {
+    width: 30vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 .sticking-pawn {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     position: fixed;
     display: none;
+    pointer-events:none;
 }
-.possible-move {
-    background-color: green !important;
-}
+
 .reset-btn {
-    float: left;
+    width: 100%;
+    margin-bottom: 1%;
 }
+
+

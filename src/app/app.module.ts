@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { NgIoModule, NgIoConfig } from 'ng-io';
+
 
 
 import { AppComponent } from './app.component';
@@ -14,6 +16,12 @@ import { WhiteCheckerComponent } from './components/white-checker/white-checker.
 import { BlackCheckerComponent } from './components/black-checker/black-checker.component';
 import { ScoreComponent } from './components/score/score.component';
 import {CollectionService} from './collection.service';
+import { ChatComponent } from './components/chat/chat.component';
+import {ChatService} from './components/chat/chat.service';
+
+const config: NgIoConfig = { url: 'http://localhost:3000', options: {} };
+
+
 
 
 @NgModule({
@@ -24,14 +32,16 @@ import {CollectionService} from './collection.service';
     CheckerComponent,
     WhiteCheckerComponent,
     BlackCheckerComponent,
-    ScoreComponent
+    ScoreComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
+      NgIoModule.forRoot(config),
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule
   ],
-  providers: [AppService, CollectionService],
+  providers: [AppService, CollectionService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

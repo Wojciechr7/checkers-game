@@ -22,19 +22,20 @@ export class Sticking {
                 transform: 'rotate(200deg)'
             });
         $(document).mousemove((e) => {
-            if (e.target.clientHeight > 100) {
+            if (e.target.clientHeight > 300) {
                 moves.possibleMoves = [];
                 this.release();
             }
             $('.sticking-pawn').css(
                 {
-                    left: e.originalEvent.clientX + 10,
-                    top: e.originalEvent.clientY + 10
+                    left: e.originalEvent.clientX - 35,
+                    top: e.originalEvent.clientY - 35
                 });
         });
     }
 
     public release() {
         $('.sticking-pawn').css('display', 'none');
+        $('.message-input').focus();
     }
 }

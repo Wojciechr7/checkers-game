@@ -1,6 +1,9 @@
+<button (click)="this.as.resetGame(); this.cs.resetDB()" class="btn btn-success reset-btn">RESET</button>
 <div (mouseup)="this.as.releaseEvent()" class="grid-container">
-  <app-score></app-score>
-  <button (click)="this.as.resetGame(); this.cs.resetDB()" class="btn btn-success reset-btn">Reset game</button>
+  <div class="left-panel">
+    <app-score></app-score>
+    <app-chat></app-chat>
+  </div>
   <div (mouseup)="$event.stopPropagation()" class="grid">
     <div *ngFor="let row of this.as.grid" class="grid-column">
       <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)" [ngClass]="{'possible-move' : this.as.moves.isMovePossible(tile.index)}">
@@ -9,6 +12,5 @@
     </div>
   </div>
 </div>
-
 <div class="sticking-pawn">
 </div>
