@@ -108,6 +108,10 @@ export class AppService {
         }
     }
 
+    public mobileEvent(tileIndex: Index) {
+        alert(tileIndex);
+    }
+
     public resetGame(): void {
         this.pawnList = new PawnsStatus().createData();
         this.game.reset();

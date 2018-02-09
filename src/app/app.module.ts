@@ -19,6 +19,7 @@ import {CollectionService} from './collection.service';
 import { ChatComponent } from './components/chat/chat.component';
 import {ChatService} from './components/chat/chat.service';
 
+
 const config: NgIoConfig = { url: 'http://localhost:3000', options: {} };
 
 
