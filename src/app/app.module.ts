@@ -20,7 +20,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import {ChatService} from './components/chat/chat.service';
 
 
-const config: NgIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: NgIoConfig = { url: 'https://safe-eyrie-80931.herokuapp.com/', options: {} };
 
 
 
