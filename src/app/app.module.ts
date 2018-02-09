@@ -37,7 +37,7 @@ const config: NgIoConfig = { url: 'http://localhost:3000', options: {} };
   ],
   imports: [
     BrowserModule,
-      NgIoModule.forRoot(config),
+/*      NgIoModule.forRoot(config),*/
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule
   ],

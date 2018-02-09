@@ -14,28 +14,32 @@ export class Sticking {
 
 
     public stickToMouse(color: string, focusedPawn: Pawn, moves: Move): void {
-        $('.sticking-pawn').css(
-            {
-                background: 'url("app/img/' + color + '_checker.png")',
-                backgroundSize: '100% 100%',
-                display: 'block',
-                transform: 'rotate(200deg)'
-            });
-        $(document).mousemove((e) => {
-            if (e.target.clientHeight > 300) {
-                moves.possibleMoves = [];
-                this.release();
-            }
+        if ($(window).width() > 600) {
             $('.sticking-pawn').css(
                 {
-                    left: e.originalEvent.clientX - 35,
-                    top: e.originalEvent.clientY - 35
+                    background: 'url("app/img/' + color + '_checker.png")',
+                    backgroundSize: '100% 100%',
+                    display: 'block',
+                    transform: 'rotate(200deg)'
                 });
-        });
+            $(document).mousemove((e) => {
+                if (e.target.clientHeight > 300) {
+                    moves.possibleMoves = [];
+                    this.release();
+                }
+                $('.sticking-pawn').css(
+                    {
+                        left: e.originalEvent.clientX - 35,
+                        top: e.originalEvent.clientY - 35
+                    });
+            });
+        }
     }
 
     public release() {
-        $('.sticking-pawn').css('display', 'none');
-        $('.message-input').focus();
+        if ($(window).width() > 600) {
+            $('.sticking-pawn').css('display', 'none');
+            $('.message-input').focus();
+        }
     }
 }
