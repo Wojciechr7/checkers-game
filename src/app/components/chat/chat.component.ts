@@ -16,12 +16,12 @@ export class ChatComponent implements OnInit {
     private myId: string;
 
 
-    constructor(/*public cs: ChatService*/) {
+    constructor(public cs: ChatService) {
         this.messages = [];
         this.myId = 'empty';
     }
 
-/*    public sendEvent(msg: string, element, keyCode?: number): void {
+    public sendEvent(msg: string, element, keyCode?: number): void {
         if (keyCode) {
             if (keyCode === 13) {
                 this.send(msg, element);
@@ -30,12 +30,12 @@ export class ChatComponent implements OnInit {
             this.send(msg, element);
         }
 
-    }*/
+    }
 
-/*    private send(msg: string, element): void {
+    private send(msg: string, element): void {
         this.cs.sendMessage(msg, this.myId);
         element.value = '';
-    }*/
+    }
     public isMyMessage(id: string): boolean {
         return (id === this.myId);
     }
@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit {
 
     ngOnInit() {
 
- /*       this.cs.getMessage().subscribe(m => {
+        this.cs.getMessage().subscribe(m => {
             this.messages.push(m);
         });
 
@@ -55,7 +55,7 @@ export class ChatComponent implements OnInit {
             if (this.myId === 'empty') {
                 this.myId = id;
             }
-        });*/
+        });
 
     }
 
