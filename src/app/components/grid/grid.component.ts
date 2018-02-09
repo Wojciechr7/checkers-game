@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppService} from '../../app.service';
 import {CollectionService} from '../../collection.service';
+import {Index} from '../../interfaces';
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.css']
+    selector: 'app-grid',
+    templateUrl: './grid.component.html',
+    styleUrls: ['./grid.component.css']
 })
 export class GridComponent implements OnInit {
     styles: Object;
 
-  constructor(public as: AppService, public cs: CollectionService) { }
+    constructor(public as: AppService, public cs: CollectionService) {
+    }
 
     protected setColor(index) {
         if ((index.y + index.x) % 2) {
@@ -23,9 +25,23 @@ export class GridComponent implements OnInit {
             });
         }
     }
+    public mobileEvent(tileIndex: Index) {
+        this.as.pickUpPawn(tileIndex, true);
+    }
+    public handleMouseUp(tileIndex: Index) {
+        if (this.as.mobilePickedUp) {
+            this.as.dropPawn(tileIndex);
+            this.cs.updateDB();
+            this.as.mobilePickedUp = false;
+        }
+    }
 
-  ngOnInit() {
-    this.as.startGame();
-  }
+    public alercik(m) {
+        alert(m);
+    }
+
+    ngOnInit() {
+        this.as.startGame();
+    }
 
 }

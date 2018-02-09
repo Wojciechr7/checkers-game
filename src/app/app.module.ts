@@ -4,6 +4,7 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { NgIoModule, NgIoConfig } from 'ng-io';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 
 
@@ -22,7 +23,12 @@ import {ChatService} from './components/chat/chat.service';
 
 const config: NgIoConfig = { url: 'https://ng-checkers-game.herokuapp.com/', options: {} };
 
-
+export class CustomHammerConfig extends HammerGestureConfig  {
+    overrides = <any>{
+        'pinch': { enable: false },
+        'rotate': { enable: false }
+    };
+}
 
 
 @NgModule({
@@ -42,7 +48,10 @@ const config: NgIoConfig = { url: 'https://ng-checkers-game.herokuapp.com/', opt
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule
   ],
-  providers: [AppService, CollectionService, ChatService],
+  providers: [AppService, CollectionService, ChatService, {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: CustomHammerConfig
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
