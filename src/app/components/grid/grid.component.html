@@ -1,9 +1,10 @@
 <button (click)="this.as.resetGame(); this.cs.resetDB()" class="btn btn-success reset-btn">RESET</button>
-<div (mouseup)="this.as.releaseEvent(); this.alercik('on to guwno robi')" (tap)="$event.stopPropagation()" class="grid-container">
-  <div (mouseup)="$event.stopPropagation()" (tap)="$event.stopPropagation()" class="grid">
+<div (mouseup)="this.as.releaseEvent()" class="grid-container">
+  <div class="grid">
     <div *ngFor="let row of this.as.grid" class="grid-column">
       <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)" [ngClass]="{'possible-move' : this.as.moves.isMovePossible(tile.index)}">
-        <app-tile (tap)="this.mobileEvent(tile.index)" (mousedown)="this.as.pickUpPawn(tile.index)" (mouseup)="this.handleMouseUp(tile.index)" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
+        <app-tile *ngIf="!this.isMobile" (mousedown)="this.as.pickUpPawn(tile.index)" (mouseup)="this.as.dropPawn(tile.index); this.cs.updateDB()" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
+        <app-tile *ngIf="this.isMobile" (press)="this.as.pickUpPawn(tile.index)" (mouseup)="this.as.dropPawn(tile.index); this.cs.updateDB()" class="tile" [tileIndex]="tile.index" [square]="tile.square"></app-tile>
       </div>
     </div>
   </div>

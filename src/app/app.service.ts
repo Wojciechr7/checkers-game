@@ -24,7 +24,6 @@ export class AppService {
     private pickedUpIndex: Index;
     public pawnList: Array<Pawn>;
     public switchPlayers: boolean;
-    public mobilePickedUp: boolean;
 
 
     constructor() {
@@ -34,25 +33,19 @@ export class AppService {
         this.pickedUp = false;
         this.pawnList = new PawnsStatus().createData();
         this.switchPlayers = false;
-        this.mobilePickedUp = false;
     }
 
     public startGame(): void {
         this.game = new Game();
     }
 
-    public pickUpPawn(tileIndex: Index, mobile?: boolean) {
+    public pickUpPawn(tileIndex: Index) {
         if (!this.pickedUp) {
             let pawnNumber: number;
             this.pickedUpIndex = tileIndex;
             this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
             pawnNumber = (this.clickedFieldType === 'white') ? 1 : 0;
             if (pawnNumber === this.game.actualPlayer) {
-                if (mobile) {
-                    setTimeout(() => {
-                        this.mobilePickedUp = true;
-                    }, 500);
-                }
                 for (const item of this.pawnList) {
                     if (item.comparePawns(tileIndex, this.clickedFieldType)) {
                         this.moves = new PossibleAttack();

@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Socket} from 'ng-socket-io';
 import {ChatService} from './chat.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app-chat',
@@ -56,6 +57,10 @@ export class ChatComponent implements OnInit {
                 this.myId = id;
             }
         });
+
+        setInterval(() => {
+            $('.messages').scrollTop($('.messages')[0].scrollHeight + $('.messages')[0].clientHeight);
+        }, 100);
 
     }
 
