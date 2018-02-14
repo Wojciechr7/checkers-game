@@ -1,3 +1,11 @@
+# Important
+
+Before installing packages, remove angular@cli from dependencies!!!
+For local use:
+- change socket.io URL in AppModule to local adress
+- build with angular-cli
+- run with app.js
+
 # CheckersGame
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
