@@ -175,10 +175,29 @@ export abstract class Pawn {
         return false;
     }
 
+    public findRemovePosition(target: Index): Index {
+        if (this.x > target.x) {
+            if (this.y > target.y) {
+                return {x: target.x + 1, y: target.y + 1};
+            }
+            if (this.y < target.y) {
+                return {x: target.x + 1, y: target.y - 1};
+            }
+        }
+        if (this.x < target.x) {
+            if (this.y > target.y) {
+                return {x: target.x - 1, y: target.y + 1};
+            }
+            if (this.y < target.y) {
+                return {x: target.x - 1, y: target.y - 1};
+            }
+        }
+    }
+
     public abstract canAttack(pawnList: Array<Pawn>): boolean;
 
 
 
     public abstract move(tileIndex: Index): void;
-    public abstract changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): void;
+    public abstract changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): boolean;
 }

@@ -23,9 +23,7 @@ export class CollectionService {
             this.as.game.actualPlayer = k[0].player;
             this.as.game.switchStatus();
             this.as.game.updateStats(this.as.pawnList);
-
-
-
+            this.as.isDbUpdated = true;
         });
 
 

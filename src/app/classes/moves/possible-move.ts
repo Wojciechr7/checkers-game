@@ -1,6 +1,7 @@
 import {Index} from '../../interfaces';
 import {Pawn} from '../pawns/pawn';
 import {Move} from './move';
+import {GameSettings} from "../../settings/game.const";
 
 export class PossibleMove extends Move {
 
@@ -46,8 +47,7 @@ export class PossibleMove extends Move {
         for (const pawn of pawnList) {
             if (pawn.comparePawns(tileIndex)) {
                 if (pawn.Queen) {
-                    a = 0;
-                    b = 3;
+                    return this.findQueenMoves(pawnList, color, tileIndex);
                 }
             }
         }
@@ -67,5 +67,58 @@ export class PossibleMove extends Move {
         }
 
         return itemsToAdd;
+    }
+
+    private findQueenMoves(pawnList: Array<Pawn>, color: string, tileIndex: Index): Array<Index> {
+        const itemsToAdd: Array<Index> = [];
+        let y: number, x: number;
+        let foundItem: boolean;
+        foundItem = false;
+
+        let directions: Array<Index>;
+        directions = [
+            {x: -1, y: -1},
+            {x: 1, y: 1},
+            {x: 1, y: -1},
+            {x: -1, y: 1}
+        ];
+
+        for (let dir = 0; dir < directions.length; dir++) {
+            x = tileIndex.x + directions[dir].x;
+            y = tileIndex.y + directions[dir].y;
+            while (x >= GameSettings.MIN_POSITION && x <= GameSettings.MAX_POSITION) {
+                for (const item of pawnList) {
+                    if (item.comparePawns({x: x, y: y})) {
+                        if (item.getColor() !== color) {
+                            if (this.checkNextField({x: x + directions[dir].x, y: y + directions[dir].y}, pawnList)) {
+                                itemsToAdd.push({x: x + directions[dir].x, y: y + directions[dir].y});
+                            }
+                        }
+                        foundItem = true;
+                        break;
+                    }
+                }
+                if (foundItem) {
+                    foundItem = false;
+                    break;
+                }
+                if (!foundItem) {
+                    itemsToAdd.push({x: x, y: y});
+                }
+                foundItem = false;
+                x += directions[dir].x;
+                y += directions[dir].y;
+            }
+        }
+
+        return itemsToAdd;
+    }
+    private checkNextField(index: Index, pawnList: Array<Pawn>): boolean {
+        for (const item of pawnList) {
+            if (item.comparePawns(index)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

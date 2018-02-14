@@ -12,11 +12,9 @@ import * as $ from 'jquery';
 export class GridComponent implements OnInit {
     styles: Object;
     public isMobile: boolean;
-    private picked: boolean;
 
     constructor(public as: AppService, public cs: CollectionService) {
         this.isMobile = false;
-        this.picked = false;
     }
 
     protected setColor(index) {
@@ -35,7 +33,6 @@ export class GridComponent implements OnInit {
     ngOnInit() {
         this.as.startGame();
         if ($(window).width() < 1000) {
-            alert('mobile');
             this.isMobile = true;
         }
     }

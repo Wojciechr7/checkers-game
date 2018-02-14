@@ -1,10 +1,10 @@
 <table class="table table-bordered table-sm">
     <thead class="table-dark text-center">
         <tr>
-            <td>PLAYER</td>
-            <td>SCORE</td>
-            <td>PAWNS</td>
-            <td>LOST PAWNS</td>
+            <td>Player</td>
+            <td>Score</td>
+            <td>Pawns</td>
+            <td>Lost pawns</td>
         </tr>
     </thead>
     <tr class="table table-inverse" *ngFor="let player of this.as.game.players" [ngClass]="{'table-success' : player.playerActive()}">

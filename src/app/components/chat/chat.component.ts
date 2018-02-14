@@ -46,6 +46,7 @@ export class ChatComponent implements OnInit {
 
         this.cs.getMessage().subscribe(m => {
             this.messages.push(m);
+            setTimeout(() =>  $('.messages').scrollTop($('.messages').height()));
         });
 
         this.cs.getOnline().subscribe(k => {
@@ -57,11 +58,5 @@ export class ChatComponent implements OnInit {
                 this.myId = id;
             }
         });
-
-        setInterval(() => {
-            $('.messages').scrollTop($('.messages')[0].scrollHeight + $('.messages')[0].clientHeight);
-        }, 100);
-
     }
-
 }

@@ -24,6 +24,7 @@ export class AppService {
     private pickedUpIndex: Index;
     public pawnList: Array<Pawn>;
     public switchPlayers: boolean;
+    public isDbUpdated: boolean;
 
 
     constructor() {
@@ -33,6 +34,7 @@ export class AppService {
         this.pickedUp = false;
         this.pawnList = new PawnsStatus().createData();
         this.switchPlayers = false;
+        this.isDbUpdated = false;
     }
 
     public startGame(): void {
@@ -40,7 +42,8 @@ export class AppService {
     }
 
     public pickUpPawn(tileIndex: Index) {
-        if (!this.pickedUp) {
+        console.log(tileIndex);
+        if (!this.pickedUp && this.isDbUpdated) {
             let pawnNumber: number;
             this.pickedUpIndex = tileIndex;
             this.clickedFieldType = this.board.checkField(tileIndex, this.pawnList);
@@ -70,16 +73,19 @@ export class AppService {
     }
 
     public dropPawn(tileIndex: Index) {
-        if (this.pickedUp) {
+        if (this.pickedUp && this.isDbUpdated) {
             if (this.focusedPawn && this.moves.compareToMoves(tileIndex)) {
+                let didAttack: boolean;
+                didAttack = false;
                 let switchPlayers: boolean;
                 switchPlayers = true;
                 this.sticker.release();
-                this.focusedPawn.changePosition(tileIndex, this.pawnList, this.moves.possibleMoves);
+                console.log(this.focusedPawn);
+                didAttack = this.focusedPawn.changePosition(tileIndex, this.pawnList, this.moves.possibleMoves);
                 this.focusedPawn.enable();
                 this.moves.possibleMoves = [];
                 this.pickedUp = false;
-                if (this.game.didAttack(this.pickedUpIndex, tileIndex)) {
+                if (didAttack) {
                     if (this.moves.canMakeNextMove(this.pawnList, tileIndex)) {
                         switchPlayers = false;
                     }
@@ -88,6 +94,7 @@ export class AppService {
                     this.switchPlayers = true;
                     this.game.changeActualPlayer(this.focusedPawn);
                 }
+                this.isDbUpdated = false;
             }
             if (!this.moves.compareToMoves(tileIndex)) {
                 this.releaseEvent();

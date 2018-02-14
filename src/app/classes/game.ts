@@ -44,7 +44,7 @@ export class Game {
         }
     }
 
-    public didAttack(before: Index, after: Index): boolean {
+    public didAttack(before: Index, after: Index, pawnList: Array<Pawn>): boolean {
         return Math.abs(before.x - after.x) === 2;
     }
 

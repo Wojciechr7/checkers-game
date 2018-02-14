@@ -23,7 +23,7 @@ export class WhitePawn extends Pawn {
         return emptyFields.length > 0;
     }
 
-    public changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): void {
+    public changePosition(tileIndex: Index, pawnlist: Array<Pawn>, possibleMoves: Array<Index>): boolean {
         let moveIsPossible: boolean = false;
         for (const move of possibleMoves) {
             if (move.x === tileIndex.x && move.y === tileIndex.y) {
@@ -36,18 +36,33 @@ export class WhitePawn extends Pawn {
             if (Math.abs(this.y - tileIndex.y) === 1) {
                 this.x = tileIndex.x;
                 this.y = tileIndex.y;
+                if (this.y === GameSettings.MAX_POSITION) {
+                    this.makeQueen();
+                }
             } else if (Math.abs(this.y - tileIndex.y) === 2) {
-
-                pawnToRemove = this.setPawnToRemove(tileIndex);
-
+                pawnToRemove = this.findRemovePosition(tileIndex);
                 this.removePawn(pawnToRemove, pawnlist);
                 this.x = tileIndex.x;
                 this.y = tileIndex.y;
-            }
-            if (this.y === GameSettings.MAX_POSITION) {
-                this.makeQueen();
+                if (this.y === GameSettings.MAX_POSITION) {
+                    this.makeQueen();
+                }
+                return true;
+            } else {
+                pawnToRemove = this.findRemovePosition(tileIndex);
+                if (pawnToRemove) {
+                    this.removePawn(pawnToRemove, pawnlist);
+                    this.x = tileIndex.x;
+                    this.y = tileIndex.y;
+                    if (this.y === GameSettings.MAX_POSITION) {
+                        this.makeQueen();
+                    }
+                    return true;
+                }
+
             }
         }
+        return false;
     }
 
 }
