@@ -21,7 +21,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import {ChatService} from './components/chat/chat.service';
 
 
-const config: NgIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: NgIoConfig = { url: 'https://ng-checkers-game.herokuapp.com/', options: {} };
 
 export class CustomHammerConfig extends HammerGestureConfig  {
     overrides = <any>{
