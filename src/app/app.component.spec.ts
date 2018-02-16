@@ -1,10 +1,24 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {BlackCheckerComponent} from "./components/black-checker/black-checker.component";
+import {ChatComponent} from "./components/chat/chat.component";
+import {CheckerComponent} from "./components/checker/checker.component";
+import {GridComponent} from "./components/grid/grid.component";
+import {ScoreComponent} from "./components/score/score.component";
+import {TileComponent} from "./components/tile/tile.component";
+import {WhiteCheckerComponent} from "./components/white-checker/white-checker.component";
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+          BlackCheckerComponent,
+          ChatComponent,
+          CheckerComponent,
+          GridComponent,
+          ScoreComponent,
+          TileComponent,
+          WhiteCheckerComponent
       ],
     }).compileComponents();
   }));

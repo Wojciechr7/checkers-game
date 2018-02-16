@@ -10,13 +10,14 @@ import {Move} from './classes/moves/move';
 import {PossibleMove} from './classes/moves/possible-move';
 import {PossibleAttack} from './classes/moves/possible-attack';
 import {Game} from './classes/game';
+import {BlackPawn} from "./classes/pawns/black-pawn";
 
 @Injectable()
 export class AppService {
     public board: Board;
     public clickedFieldType: string;
     public grid: Tile[][];
-    private focusedPawn: Pawn;
+    public focusedPawn: Pawn;
     private sticker: Sticking;
     private moves: Move;
     public game: Game;
@@ -35,6 +36,7 @@ export class AppService {
         this.pawnList = new PawnsStatus().createData();
         this.switchPlayers = false;
         this.isDbUpdated = false;
+        this.sticker = new Sticking(false, 'empty');
     }
 
     public startGame(): void {
@@ -42,7 +44,6 @@ export class AppService {
     }
 
     public pickUpPawn(tileIndex: Index) {
-        console.log(tileIndex);
         if (!this.pickedUp && this.isDbUpdated) {
             let pawnNumber: number;
             this.pickedUpIndex = tileIndex;
@@ -68,19 +69,15 @@ export class AppService {
                 this.releaseEvent();
             }
         }
-
-
     }
 
     public dropPawn(tileIndex: Index) {
         if (this.pickedUp && this.isDbUpdated) {
             if (this.focusedPawn && this.moves.compareToMoves(tileIndex)) {
                 let didAttack: boolean;
-                didAttack = false;
                 let switchPlayers: boolean;
                 switchPlayers = true;
                 this.sticker.release();
-                console.log(this.focusedPawn);
                 didAttack = this.focusedPawn.changePosition(tileIndex, this.pawnList, this.moves.possibleMoves);
                 this.focusedPawn.enable();
                 this.moves.possibleMoves = [];

@@ -3,6 +3,8 @@ import {AngularFirestore, AngularFirestoreCollection} from 'angularfire2/firesto
 import {Observable} from 'rxjs/Observable';
 import {CollectionData} from './interfaces/collection-data';
 import {AppService} from './app.service';
+import {Pawn} from "./classes/pawns/pawn";
+import {BlackPawn} from "./classes/pawns/black-pawn";
 
 @Injectable()
 export class CollectionService {
@@ -23,6 +25,7 @@ export class CollectionService {
             this.as.game.actualPlayer = k[0].player;
             this.as.game.switchStatus();
             this.as.game.updateStats(this.as.pawnList);
+            this.as.focusedPawn = new BlackPawn(-1, -1, false, -1);
             this.as.isDbUpdated = true;
         });
 

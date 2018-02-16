@@ -194,6 +194,25 @@ export abstract class Pawn {
         }
     }
 
+    protected queenAttacked(target: Index) {
+        if (this.x > target.x) {
+            if (this.y > target.y) {
+                console.log({x: target.x + 1, y: target.y + 1});
+            }
+            if (this.y < target.y) {
+                console.log({x: target.x + 1, y: target.y - 1});
+            }
+        }
+        if (this.x < target.x) {
+            if (this.y > target.y) {
+                console.log({x: target.x - 1, y: target.y + 1});
+            }
+            if (this.y < target.y) {
+                console.log({x: target.x - 1, y: target.y - 1});
+            }
+        }
+    }
+
     public abstract canAttack(pawnList: Array<Pawn>): boolean;
 
 

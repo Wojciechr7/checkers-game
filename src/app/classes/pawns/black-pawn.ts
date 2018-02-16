@@ -43,7 +43,7 @@ export class BlackPawn extends Pawn {
                 if (this.y === GameSettings.MIN_POSITION) {
                     this.makeQueen();
                 }
-            } else if (Math.abs(this.y - tileIndex.y) > 1) {
+            } else if (Math.abs(this.y - tileIndex.y) > 1 && !this.queen) {
                 pawnToRemove = this.findRemovePosition(tileIndex);
                 this.removePawn(pawnToRemove, pawnlist);
                 this.x = tileIndex.x;
@@ -52,6 +52,20 @@ export class BlackPawn extends Pawn {
                     this.makeQueen();
                 }
                 return true;
+            } else if (Math.abs(this.y - tileIndex.y) > 1 && this.queen) {
+                pawnToRemove = this.findRemovePosition(tileIndex);
+                this.x = tileIndex.x;
+                this.y = tileIndex.y;
+                if (this.y === GameSettings.MIN_POSITION) {
+                    this.makeQueen();
+                }
+                for (let pawn of pawnlist) {
+                    if (pawn.comparePawns(pawnToRemove) && pawn.Display) {
+                        this.removePawn(pawnToRemove, pawnlist);
+                        return true;
+                    }
+                }
+                this.queenAttacked(tileIndex);
             }
         }
         return false;
