@@ -34,6 +34,7 @@
     padding: 0;
     border: 1px solid white;
     box-shadow: 31px 31px 5px 0px rgba(0,0,0,0.4);
+    position: relative;
 
 
 }
@@ -141,3 +142,28 @@
     }
 }
 
+.arrow {
+    width: 12.5%;
+    height: 12.5%;
+    background-image: url("../../img/arrow.png");
+    background-size: 100% 100%;
+    pointer-events:none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    animation: arrow-anim 1s infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes arrow-anim {
+    0% {
+        width: 12.5%;
+    }
+    50% {
+        width: 16%;
+    }
+    100% {
+        width: 12.5%;
+    }
+}

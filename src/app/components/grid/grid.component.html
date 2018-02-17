@@ -4,6 +4,7 @@
 <button (click)="this.as.resetGame(); this.cs.resetDB()" class="btn btn-dark reset-btn">RESET</button>
 <div (mouseup)="this.as.releaseEvent()" class="grid-container">
     <div class="grid">
+        <div class="arrow"></div>
         <div *ngFor="let row of this.as.grid" class="grid-column">
             <div *ngFor="let tile of row" class="grid-item" [ngStyle]="setColor(tile.index)"
                  [ngClass]="{'possible-move' : this.as.moves.isMovePossible(tile.index)}">

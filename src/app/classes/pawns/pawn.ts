@@ -48,6 +48,12 @@ export abstract class Pawn {
         };
     }
 
+    get X(): number {
+        return this.x;
+    }
+    get Y(): number {
+        return this.y;
+    }
     get Display(): boolean {
         return this.display;
     }

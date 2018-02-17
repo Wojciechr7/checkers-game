@@ -10,7 +10,7 @@ import {Move} from './classes/moves/move';
 import {PossibleMove} from './classes/moves/possible-move';
 import {PossibleAttack} from './classes/moves/possible-attack';
 import {Game} from './classes/game';
-import {BlackPawn} from "./classes/pawns/black-pawn";
+import {Arrow} from './classes/arrow';
 
 @Injectable()
 export class AppService {
@@ -26,6 +26,7 @@ export class AppService {
     public pawnList: Array<Pawn>;
     public switchPlayers: boolean;
     public isDbUpdated: boolean;
+    public arrow: Arrow;
 
 
     constructor() {
@@ -52,17 +53,20 @@ export class AppService {
             if (pawnNumber === this.game.actualPlayer) {
                 for (const item of this.pawnList) {
                     if (item.comparePawns(tileIndex, this.clickedFieldType)) {
-                        this.moves = new PossibleAttack();
-                        this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
+                            this.moves = new PossibleAttack();
+                            this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
+
                         if (!this.moves.isAttackPossible && this.moves.scanForPossibleAttacks(this.pawnList, this.clickedFieldType)) {
                             this.moves = new PossibleMove();
                             this.moves.generatePossibleMoves(tileIndex, this.clickedFieldType, this.pawnList);
                         }
-                        this.focusedPawn = item;
-                        this.focusedPawn.disable();
-                        this.sticker = new Sticking(true, this.clickedFieldType);
-                        this.sticker.stickToMouse(this.clickedFieldType, this.focusedPawn, this.moves);
-                        this.pickedUp = true;
+                        if (this.moves.possibleMoves.length > 0) {
+                            this.focusedPawn = item;
+                            this.focusedPawn.disable();
+                            this.sticker = new Sticking(true, this.clickedFieldType);
+                            this.sticker.stickToMouse(this.clickedFieldType, this.focusedPawn, this.moves);
+                            this.pickedUp = true;
+                        }
                     }
                 }
             } else {
@@ -78,6 +82,8 @@ export class AppService {
                 let switchPlayers: boolean;
                 switchPlayers = true;
                 this.sticker.release();
+                this.arrow = new Arrow({x: this.focusedPawn.X, y: this.focusedPawn.Y}, tileIndex);
+                this.arrow.drawArrow();
                 didAttack = this.focusedPawn.changePosition(tileIndex, this.pawnList, this.moves.possibleMoves);
                 this.focusedPawn.enable();
                 this.moves.possibleMoves = [];
@@ -106,13 +112,15 @@ export class AppService {
             this.focusedPawn.enable();
             this.moves.possibleMoves = [];
             this.pickedUp = false;
+            if (this.arrow) {
+                this.arrow.hideArrow();
+            }
         }
     }
 
     public resetGame(): void {
         this.pawnList = new PawnsStatus().createData();
         this.game.reset();
-
     }
 
 

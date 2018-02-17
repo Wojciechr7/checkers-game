@@ -5,6 +5,7 @@ import {CollectionData} from './interfaces/collection-data';
 import {AppService} from './app.service';
 import {Pawn} from "./classes/pawns/pawn";
 import {BlackPawn} from "./classes/pawns/black-pawn";
+import {Arrow} from "./classes/arrow";
 
 @Injectable()
 export class CollectionService {
@@ -26,6 +27,11 @@ export class CollectionService {
             this.as.game.switchStatus();
             this.as.game.updateStats(this.as.pawnList);
             this.as.focusedPawn = new BlackPawn(-1, -1, false, -1);
+            if (k[0].arrow[0]) {
+                this.as.arrow = new Arrow(k[0].arrow[0], k[0].arrow[1]);
+                this.as.arrow.drawArrow();
+            }
+
             this.as.isDbUpdated = true;
         });
 
@@ -38,6 +44,15 @@ export class CollectionService {
             this.dbData.push(pawn.getAllData());
         }
         this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({pawns: this.dbData});
+        if (this.as.arrow) {
+            this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({arrow:
+                    [
+                        this.as.arrow.BeforeIndex,
+                        this.as.arrow.AfterIndex
+                    ]
+            });
+        }
+
         if (this.as.switchPlayers) {
             this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({player: this.as.game.actualPlayer});
             this.as.switchPlayers = false;
@@ -55,6 +70,11 @@ export class CollectionService {
 
         this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({pawns: this.dbData});
         this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({player: 1});
+        this.itemsCollection.doc('FWCPVQ6c8WUGDUMqS9cr').update({arrow: []});
+
+        if (this.as.arrow) {
+            this.as.arrow.hideArrow();
+        }
     }
 
 }
